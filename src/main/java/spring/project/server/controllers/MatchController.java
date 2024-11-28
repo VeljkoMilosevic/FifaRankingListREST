@@ -8,6 +8,7 @@ package spring.project.server.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +22,6 @@ import spring.project.server.exceptions.MatchNotFound;
 import spring.project.server.model.Match;
 import spring.project.server.services.MatchService;
 
-import jakarta.validation.Valid;
 import java.util.List;
 
 /**
@@ -41,7 +41,7 @@ public class MatchController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveSelection(@Valid @RequestBody final Match match) {
+    public void saveSelection(@Validated @RequestBody final Match match) {
         matchService.saveMatch(match);
     }
 

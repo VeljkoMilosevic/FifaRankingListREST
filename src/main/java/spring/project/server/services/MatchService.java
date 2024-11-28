@@ -22,7 +22,7 @@ import java.util.List;
 @Transactional
 public class MatchService {
 
-    MatchRepository matchRepository;
+    private MatchRepository matchRepository;
 
     @Autowired
     public MatchService(final MatchRepository matchRepository) {

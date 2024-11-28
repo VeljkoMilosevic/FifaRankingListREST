@@ -20,7 +20,7 @@ import java.util.List;
 @Transactional
 public class MatchTypeService {
 
-    MatchTypeRepository matchTypeRepository;
+    private MatchTypeRepository matchTypeRepository;
 
     @Autowired
     public MatchTypeService(final MatchTypeRepository matchTypeRepository) {

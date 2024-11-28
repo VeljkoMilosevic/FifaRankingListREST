@@ -25,7 +25,6 @@ import spring.project.server.model.Selection;
 import spring.project.server.services.CalculateRangList;
 import spring.project.server.services.SelectionService;
 
-import jakarta.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,7 +33,6 @@ import java.util.List;
  */
 @RequestMapping("api/selections")
 @RestController
-@Validated
 public class SelectionController {
 
     private final SelectionService selectionService;
@@ -48,7 +46,7 @@ public class SelectionController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveSelection(@Valid @RequestBody final Selection selection) {
+    public void saveSelection(@Validated @RequestBody final Selection selection) {
         selectionService.save(selection);
     }
 

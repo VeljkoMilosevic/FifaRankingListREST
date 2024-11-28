@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package spring.project.server.controllertest.confederation;
+package spring.project.server.controllers;
 
 import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * @author Veljko
  */
-public class ConfederationControllerTest extends AbstractTest {
+class ConfederationControllerTest extends AbstractTest {
 
     @Override
     @BeforeEach
@@ -32,7 +32,7 @@ public class ConfederationControllerTest extends AbstractTest {
     }
 
     @Test
-    public void getConfederations() throws Exception {
+    void getConfederations() throws Exception {
         final String uri = "/api/confederations";
         final MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
                 .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
@@ -51,46 +51,47 @@ public class ConfederationControllerTest extends AbstractTest {
     private List<Confederation> createAllConfederations() {
         final List<Confederation> confederations = new LinkedList<>();
 
-        final Confederation EUROPE = new Confederation();
-        EUROPE.setId(1);
-        EUROPE.setName("EUROPE");
-        EUROPE.setStrength(1);
-        confederations.add(EUROPE);
+        final Confederation confederationEurope = new Confederation();
+        confederationEurope.setId(1);
+        confederationEurope.setName("EUROPE");
+        confederationEurope.setStrength(1);
+        confederations.add(confederationEurope);
 
-        final Confederation SOUTHAMERICA = new Confederation();
-        SOUTHAMERICA.setId(2);
-        SOUTHAMERICA.setName("SOUTHAMERICA");
-        SOUTHAMERICA.setStrength(1);
-        confederations.add(SOUTHAMERICA);
+        final Confederation confederationSouthAmerica =
+                new Confederation();
+        confederationSouthAmerica.setId(2);
+        confederationSouthAmerica.setName("SOUTHAMERICA");
+        confederationSouthAmerica.setStrength(1);
+        confederations.add(confederationSouthAmerica);
 
-        final Confederation AFRICA = new Confederation();
-        AFRICA.setId(3);
-        AFRICA.setName("AFRICA");
-        AFRICA.setStrength(0.86);
-        confederations.add(AFRICA);
+        final Confederation confederationAfrica = new Confederation();
+        confederationAfrica.setId(3);
+        confederationAfrica.setName("AFRICA");
+        confederationAfrica.setStrength(0.86);
+        confederations.add(confederationAfrica);
 
-        final Confederation ASIA = new Confederation();
-        ASIA.setId(4);
-        ASIA.setName("ASIA");
-        ASIA.setStrength(0.86);
-        confederations.add(ASIA);
+        final Confederation confederationAsia = new Confederation();
+        confederationAsia.setId(4);
+        confederationAsia.setName("ASIA");
+        confederationAsia.setStrength(0.86);
+        confederations.add(confederationAsia);
 
-        final Confederation NORTHAMERICA = new Confederation();
-        NORTHAMERICA.setId(5);
-        NORTHAMERICA.setName("NORTHAMERICA");
-        NORTHAMERICA.setStrength(0.84);
-        confederations.add(NORTHAMERICA);
+        final Confederation confederationNorthAmerica = new Confederation();
+        confederationNorthAmerica.setId(5);
+        confederationNorthAmerica.setName("NORTHAMERICA");
+        confederationNorthAmerica.setStrength(0.84);
+        confederations.add(confederationNorthAmerica);
 
-        final Confederation OCEANIA = new Confederation();
-        OCEANIA.setId(6);
-        OCEANIA.setName("OCEANIA");
-        OCEANIA.setStrength(0.84);
-        confederations.add(OCEANIA);
+        final Confederation confederationOceania = new Confederation();
+        confederationOceania.setId(6);
+        confederationOceania.setName("OCEANIA");
+        confederationOceania.setStrength(0.84);
+        confederations.add(confederationOceania);
 
         return confederations;
     }
 
-    class ConfederataionComparator implements Comparator<Confederation> {
+    static class ConfederataionComparator implements Comparator<Confederation> {
 
         @Override
         public int compare(final Confederation a, final Confederation b) {

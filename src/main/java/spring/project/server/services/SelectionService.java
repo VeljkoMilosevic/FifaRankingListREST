@@ -23,8 +23,8 @@ import java.util.List;
 @Transactional
 public class SelectionService {
 
-    SelectionRepository selectionRepository;
-    MatchRepository matchRepository;
+    private SelectionRepository selectionRepository;
+    private MatchRepository matchRepository;
 
     @Autowired
     public SelectionService(final SelectionRepository selectionRepository, final MatchRepository matchRepository) {

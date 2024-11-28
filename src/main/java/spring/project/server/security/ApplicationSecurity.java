@@ -5,39 +5,56 @@
  */
 package spring.project.server.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
-import spring.project.server.services.UserService;
+import org.springframework.security.web.SecurityFilterChain;
 
 import javax.sql.DataSource;
 
 /**
  * @author Veljko
  */
-//@Configuration
+@Configuration
 public class ApplicationSecurity {
 
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.authorizeHttpRequests(config -> config
+                .requestMatchers(HttpMethod.GET, "/api/**").hasAnyAuthority("user", "admin")
+                .requestMatchers(HttpMethod.POST, "/api/**").hasAnyAuthority("user", "admin")
+                .requestMatchers(HttpMethod.PUT, "/api/**").hasAnyAuthority("user", "admin")
+                .requestMatchers(HttpMethod.DELETE, "/api/**").hasAuthority("admin"));
+        httpSecurity.httpBasic(Customizer.withDefaults());
+        httpSecurity.csrf(csrf->csrf.disable());
+        return httpSecurity.build();
+    }
 
-    //@Override
     @Bean
     public UserDetailsManager userDetailsManager(DataSource dataSource) {
         JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
         jdbcUserDetailsManager.setUsersByUsernameQuery("SELECT " +
-                "user_id, password, active FROM members WHERE " +
-                "user_id=?");
+                "username, password, active FROM user_table WHERE " +
+                "username=?");
         jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("SELECT " +
-                "user_id, role FROM roles WHERE " +
-                "user_id=?");
+                "username, role FROM user_table WHERE " +
+                "username=?");
         return jdbcUserDetailsManager;
+    }
+
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }

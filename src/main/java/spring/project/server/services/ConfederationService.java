@@ -21,7 +21,7 @@ import java.util.List;
 @Transactional
 public class ConfederationService {
 
-    ConfederationRepository confederationRepository;
+    private ConfederationRepository confederationRepository;
 
     @Autowired
     public ConfederationService(final ConfederationRepository confederationRepository) {

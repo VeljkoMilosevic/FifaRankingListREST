@@ -21,7 +21,7 @@ import java.util.List;
 @RestController
 public class ConfederationController {
 
-    ConfederationService confederationService;
+    private ConfederationService confederationService;
 
     @Autowired
     public ConfederationController(final ConfederationService confederationService) {

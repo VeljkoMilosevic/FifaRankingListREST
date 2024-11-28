@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import spring.project.server.exceptions.UserNotFoundException;
 import spring.project.server.model.User;
 import spring.project.server.repositories.UserRepository;
-import spring.project.server.security.UserWrapper;
 
 import java.util.List;
 
@@ -24,16 +23,10 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class UserService implements UserDetailsService {
+public class UserService {
 
     private UserRepository userRepository;
-
     private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public void setPasswordEncoder(final PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Autowired
     public void setUserRepository(final UserRepository userRepository) {
@@ -69,10 +62,7 @@ public class UserService implements UserDetailsService {
     }
 
     public User login(final User user) {
-        final User databaseUser = userRepository.findByUsername(user.getUsername());
-        if (databaseUser == null || !passwordEncoder.matches(user.getPassword(), databaseUser.getPassword())) {
-            return null;
-        }
+        final User databaseUser = userRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword());
         return databaseUser;
     }
 
@@ -84,16 +74,6 @@ public class UserService implements UserDetailsService {
         users.forEach((user) -> {
             userRepository.save(user);
         });
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-        final User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found.");
-        }
-        return new UserWrapper(user);
     }
 
 }
