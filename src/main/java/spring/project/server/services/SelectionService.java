@@ -5,7 +5,6 @@
  */
 package spring.project.server.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import spring.project.server.exceptions.SelectionNotFoundException;
@@ -23,10 +22,9 @@ import java.util.List;
 @Transactional
 public class SelectionService {
 
-    private SelectionRepository selectionRepository;
-    private MatchRepository matchRepository;
+    private final SelectionRepository selectionRepository;
+    private final MatchRepository matchRepository;
 
-    @Autowired
     public SelectionService(final SelectionRepository selectionRepository, final MatchRepository matchRepository) {
         this.selectionRepository = selectionRepository;
         this.matchRepository = matchRepository;
@@ -46,7 +44,7 @@ public class SelectionService {
     }
 
     public void updateSelection(final Selection selection, final int id) {
-        if (!selectionRepository.findById(id).isPresent()) {
+        if (selectionRepository.findById(id).isEmpty()) {
             throw new SelectionNotFoundException();
         }
         selectionRepository.save(selection);

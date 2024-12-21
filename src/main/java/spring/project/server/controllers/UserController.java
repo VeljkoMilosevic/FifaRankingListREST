@@ -6,7 +6,6 @@ package spring.project.server.controllers;
  * and open the template in the editor.
  */
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +34,6 @@ public class UserController {
 
     private final UserService userService;
 
-    @Autowired
     public UserController(final UserService userService) {
         this.userService = userService;
     }

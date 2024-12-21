@@ -5,7 +5,6 @@
  */
 package spring.project.server.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +19,6 @@ public class MatchTypeController {
 
     private final MatchTypeService matchTypeService;
 
-    @Autowired
     public MatchTypeController(final MatchTypeService matchTypeService) {
         this.matchTypeService = matchTypeService;
     }

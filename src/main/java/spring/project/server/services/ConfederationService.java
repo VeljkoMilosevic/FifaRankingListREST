@@ -6,7 +6,6 @@
 package spring.project.server.services;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import spring.project.server.model.Confederation;
@@ -23,7 +22,6 @@ public class ConfederationService {
 
     private ConfederationRepository confederationRepository;
 
-    @Autowired
     public ConfederationService(final ConfederationRepository confederationRepository) {
         this.confederationRepository = confederationRepository;
     }

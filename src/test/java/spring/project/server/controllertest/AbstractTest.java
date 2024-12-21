@@ -25,7 +25,6 @@ public abstract class AbstractTest {
 
     protected MockMvc mvc;
 
-    @Autowired
     WebApplicationContext webApplicationContext;
 
     protected void setUp() {

@@ -27,8 +27,8 @@ import java.util.List;
 /**
  * @author Veljko
  */
-@ControllerAdvice
-public class RestExceptionHandler extends ResponseEntityExceptionHandler {
+//@ControllerAdvice
+public class RestExceptionHandler  {
 
    // @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(final MethodArgumentNotValidException ex, final HttpHeaders headers, final HttpStatus status, final WebRequest request) {

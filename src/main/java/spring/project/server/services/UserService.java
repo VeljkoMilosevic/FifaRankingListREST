@@ -5,10 +5,6 @@
  */
 package spring.project.server.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +24,6 @@ public class UserService {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
     public void setUserRepository(final UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -62,8 +57,7 @@ public class UserService {
     }
 
     public User login(final User user) {
-        final User databaseUser = userRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword());
-        return databaseUser;
+        return userRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword());
     }
 
     public User findByUsername(final User user) {
@@ -71,9 +65,7 @@ public class UserService {
     }
 
     public void updateUsers(final List<User> users) {
-        users.forEach((user) -> {
-            userRepository.save(user);
-        });
+        users.forEach(user -> userRepository.save(user));
     }
 
 }

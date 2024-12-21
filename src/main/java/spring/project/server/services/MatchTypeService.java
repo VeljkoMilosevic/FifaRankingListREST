@@ -5,7 +5,6 @@
  */
 package spring.project.server.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import spring.project.server.model.MatchType;
@@ -20,9 +19,8 @@ import java.util.List;
 @Transactional
 public class MatchTypeService {
 
-    private MatchTypeRepository matchTypeRepository;
+    private final MatchTypeRepository matchTypeRepository;
 
-    @Autowired
     public MatchTypeService(final MatchTypeRepository matchTypeRepository) {
         this.matchTypeRepository = matchTypeRepository;
     }

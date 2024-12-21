@@ -19,6 +19,8 @@ import spring.project.server.model.User;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 /**
@@ -80,7 +82,10 @@ public class MatchControllerReadOperationTest extends AbstractTest {
         match.setUser(user);
 
         final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy.");
-        final Date date = simpleDateFormat.parse("1.1.2021.");
+        final LocalDate date =
+                 simpleDateFormat.parse("1.1.2021.").toInstant()
+                .atZone(ZoneId.of("UTC"))
+                .toLocalDate();
         match.setDate(date);
 
         final MatchType matchType = new MatchType();

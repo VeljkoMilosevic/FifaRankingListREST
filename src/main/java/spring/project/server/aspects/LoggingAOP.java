@@ -13,6 +13,7 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import spring.project.server.exceptions.ApiException;
 import spring.project.server.exceptions.ApiValidationException;
@@ -21,13 +22,9 @@ import spring.project.server.exceptions.ApiValidationException;
  * @author Veljko
  */
 @Aspect
-@Component
 public class LoggingAOP {
 
     private static final Logger LOGGER = Logger.getLogger("Logger");
-
-    public LoggingAOP() {
-    }
 
     @Pointcut("execution(public * spring.project.server.services.*.*(..))")
     private void servicesClasses() {

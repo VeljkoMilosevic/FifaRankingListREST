@@ -19,6 +19,8 @@ import spring.project.server.model.Selection;
 import spring.project.server.model.User;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 /**
@@ -60,7 +62,10 @@ public class MatchControllerCreateOperationTest extends AbstractTest {
         match.setUser(user);
 
         final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy.");
-        final Date date = simpleDateFormat.parse("2.2.2020.");
+        final LocalDate date = simpleDateFormat.parse("2.2.2020.")
+                .toInstant()
+                .atZone(ZoneId.of("UTC"))
+                .toLocalDate();
         match.setDate(date);
 
         final MatchType matchType = new MatchType();

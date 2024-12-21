@@ -20,7 +20,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -39,7 +39,7 @@ public class Match implements Serializable {
     @Temporal(TemporalType.DATE)
     @Column(name = "MATCH_DATE")
     @NotNull()
-    private Date date;
+    private LocalDate date;
 
     @OneToOne()
     @JoinColumn(name = "MATCH_HOST")
@@ -74,11 +74,11 @@ public class Match implements Serializable {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(final Date date) {
+    public void setDate(final LocalDate date) {
         this.date = date;
     }
 

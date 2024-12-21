@@ -19,6 +19,5 @@ public class MatchConstants {
     public static final double LAST_YEAR = 0.5;
     public static final double TWO_YEARS_AGO = 0.3;
     public static final double THREE_YEARS_AGO = 0.2;
-
-    public static final int INITIAL_OPPONENT_STRENGTH = 200;
+    public static final double INITIAL_OPPONENT_STRENGTH = 200d;
 }

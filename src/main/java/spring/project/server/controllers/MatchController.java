@@ -6,7 +6,6 @@
 package spring.project.server.controllers;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,7 +32,6 @@ public class MatchController {
 
     private final MatchService matchService;
 
-    @Autowired
     public MatchController(final MatchService matchService) {
         this.matchService = matchService;
     }

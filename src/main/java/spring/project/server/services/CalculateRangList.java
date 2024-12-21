@@ -5,7 +5,6 @@
  */
 package spring.project.server.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,10 +13,9 @@ import spring.project.server.model.Selection;
 import spring.project.server.repositories.MatchRepository;
 import spring.project.server.repositories.SelectionRepository;
 
+import java.time.LocalDate;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Veljko
@@ -29,7 +27,6 @@ public class CalculateRangList {
     SelectionRepository selectionRepository;
     MatchRepository matchRepository;
 
-    @Autowired
     public CalculateRangList(final SelectionRepository selectionRepository, final MatchRepository matchRepository) {
         this.selectionRepository = selectionRepository;
         this.matchRepository = matchRepository;
@@ -88,16 +85,17 @@ public class CalculateRangList {
         return m.getMatchType().getStrength();
     }
 
-    private double checkDate(final Match m) {
-        final Date date = new Date();
+    private double checkDate(final Match match) {
+        final LocalDate date = LocalDate.now();
+        int matchYear = match.getDate().getYear();
 
-        if (m.getDate().getYear() == date.getYear()) {
+        if (matchYear == date.getYear()) {
             return MatchConstants.THIS_YEAR;
-        } else if (m.getDate().getYear() + 1 == date.getYear()) {
+        } else if (matchYear + 1 == date.getYear()) {
             return MatchConstants.LAST_YEAR;
-        } else if (m.getDate().getYear() + 2 == date.getYear()) {
+        } else if (matchYear + 2 == date.getYear()) {
             return MatchConstants.TWO_YEARS_AGO;
-        } else if (m.getDate().getYear() + 3 == date.getYear()) {
+        } else if (matchYear + 3 == date.getYear()) {
             return MatchConstants.THREE_YEARS_AGO;
         }
         return 0;
@@ -121,7 +119,7 @@ public class CalculateRangList {
     private void updateRangList(List<Selection> selections) {
         selections = selections.stream()
                 .sorted(Comparator.comparing(Selection::getPoints).reversed())
-                .collect(Collectors.toList());
+                .toList();
         int rang = 1;
         for (final Selection selection : selections) {
             selection.setRang(rang++);
