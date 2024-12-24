@@ -5,6 +5,7 @@
  */
 package spring.project.server.exceptions.handler;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -12,8 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.CannotCreateTransactionException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import jakarta.persistence.EntityNotFoundException;
 import spring.project.server.exceptions.BusyUsernameException;
 import spring.project.server.exceptions.MatchNotFound;
 import spring.project.server.exceptions.SelectionNotFoundException;
@@ -26,7 +25,7 @@ import java.time.ZonedDateTime;
  * @author Veljko
  */
 @ControllerAdvice
-public class RestExceptionHandler  {
+public class RestExceptionHandler {
 
     @ExceptionHandler(value = {SelectionNotFoundException.class})
     public ResponseEntity<Object> handleSelectionNotFound(final SelectionNotFoundException ex) {

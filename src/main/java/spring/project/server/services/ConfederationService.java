@@ -20,7 +20,7 @@ import java.util.List;
 @Transactional
 public class ConfederationService {
 
-    private ConfederationRepository confederationRepository;
+    private final ConfederationRepository confederationRepository;
 
     public ConfederationService(final ConfederationRepository confederationRepository) {
         this.confederationRepository = confederationRepository;

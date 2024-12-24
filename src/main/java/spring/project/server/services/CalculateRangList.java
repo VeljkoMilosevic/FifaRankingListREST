@@ -24,14 +24,20 @@ import java.util.List;
 @Transactional
 public class CalculateRangList {
 
-    SelectionRepository selectionRepository;
-    MatchRepository matchRepository;
+    private final SelectionRepository selectionRepository;
+    private final MatchRepository matchRepository;
 
     public CalculateRangList(final SelectionRepository selectionRepository, final MatchRepository matchRepository) {
         this.selectionRepository = selectionRepository;
         this.matchRepository = matchRepository;
     }
 
+    private static Selection getOpponent(final Match match, final Selection selection) {
+        if (selection.equals(match.getAway())) {
+            return match.getHost();
+        }
+        return match.getAway();
+    }
 
     @Scheduled(cron = "0 * * * * *")
     public void calculate() {
@@ -107,13 +113,6 @@ public class CalculateRangList {
 
     private double checkConfederationStrength(final Match match, final Selection selection) {
         return getOpponent(match, selection).getConfederation().getStrength();
-    }
-
-    private static Selection getOpponent(final Match match, final Selection selection) {
-        if (selection.equals(match.getAway())) {
-            return match.getHost();
-        }
-        return match.getAway();
     }
 
     private void updateRangList(List<Selection> selections) {
