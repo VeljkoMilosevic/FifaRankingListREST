@@ -6,25 +6,27 @@
 package spring.project.server.aspects;
 
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.context.annotation.Scope;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import spring.project.server.exceptions.ApiException;
-import spring.project.server.exceptions.ApiValidationException;
+import spring.project.server.FifaRangListServerApplication;
+import spring.project.server.exceptions.handler.ApiException;
 
 /**
  * @author Veljko
  */
 @Aspect
+@Component
 public class LoggingAOP {
 
-    private static final Logger LOGGER = Logger.getLogger("Logger");
+    private static final Logger LOGGER = LoggerFactory.getLogger(FifaRangListServerApplication.class);;
 
     @Pointcut("execution(public * spring.project.server.services.*.*(..))")
     private void servicesClasses() {
@@ -32,7 +34,7 @@ public class LoggingAOP {
 
     @Before("servicesClasses()")
     public void beforeServiceClassesLogger(final JoinPoint joinPoint) {
-        LOGGER.info("Calling service " + joinPoint.getSignature().getName() + "() in service class " + joinPoint.getTarget().getClass().getSimpleName());
+        LOGGER.info("Calling service method " + joinPoint.getSignature().getName() + "() in service class " + joinPoint.getTarget().getClass().getSimpleName());
     }
 
     @AfterReturning("servicesClasses()")
@@ -64,7 +66,7 @@ public class LoggingAOP {
     }
 
     @AfterReturning(pointcut = "validationException()", returning = "result")
-    public void afterValidationException(final JoinPoint joinPoint, final org.springframework.http.ResponseEntity result) {
+    public void afterValidationException(final JoinPoint joinPoint, final ResponseEntity result) {
         final ApiValidationException apiValidationException = (ApiValidationException) result.getBody();
         LOGGER.info(apiValidationException.getMessage() + ":" + apiValidationException.getDetails());
     }
@@ -76,8 +78,8 @@ public class LoggingAOP {
     }
 
     @AfterReturning(pointcut = "databaseException()", returning = "result")
-    public void afterFatalDatabaseException(final JoinPoint joinPoint, final org.springframework.http.ResponseEntity result) {
+    public void afterFatalDatabaseException(final JoinPoint joinPoint, final ResponseEntity result) {
         final ApiException apiException = (ApiException) result.getBody();
-        LOGGER.fatal(apiException.getMessage() + " Cannot create database connection.");
+        LOGGER.error(apiException.getMessage() + " Cannot create " + "database connection.");
     }
 }

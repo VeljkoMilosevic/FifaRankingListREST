@@ -15,13 +15,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableScheduling
 public class FifaRangListServerApplication {
 
-    // TODO endpoints DANAS
-    // TODO exception handler and HTTPS error codes DANAS
+    // TODO endpoints
     // TODO Unit tests
     // TODO audit
+    // TODO AOP
     public static void main(final String[] args) {
-        final String log4jConfPath = "src/main/resources/log4j.properties";
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         SpringApplication.run(FifaRangListServerApplication.class, args);
     }
 
