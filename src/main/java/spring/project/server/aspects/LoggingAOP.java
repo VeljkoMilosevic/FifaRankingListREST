@@ -26,11 +26,10 @@ import spring.project.server.exceptions.handler.ApiException;
 @Component
 public class LoggingAOP {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FifaRangListServerApplication.class);;
+    public static final Logger LOGGER = LoggerFactory.getLogger(FifaRangListServerApplication.class);
 
     @Pointcut("execution(public * spring.project.server.services.*.*(..))")
-    private void servicesClasses() {
-    }
+    public void servicesClasses() {}
 
     @Before("servicesClasses()")
     public void beforeServiceClassesLogger(final JoinPoint joinPoint) {
@@ -50,7 +49,7 @@ public class LoggingAOP {
     }
 
     @Pointcut("execution(public * spring.project.server.controllers.*.*(..))")
-    private void controllersClasses() {
+    public void controllersClasses() {
     }
 
     @AfterThrowing(pointcut = "controllersClasses()", throwing = "ex")
@@ -60,9 +59,8 @@ public class LoggingAOP {
     }
 
     @Pointcut("execution(protected org.springframework.http" +
-            ".ResponseEntity spring.project.server.exceptions" +
-            ".RestExceptionHandler.handleMethodArgumentNotValid(..))")
-    private void validationException() {
+            ".ResponseEntity spring.project.server.exceptions.handler.RestExceptionHandler.handleMethodArgumentNotValid(..))")
+    public void validationException() {
     }
 
     @AfterReturning(pointcut = "validationException()", returning = "result")
@@ -72,9 +70,8 @@ public class LoggingAOP {
     }
 
     @Pointcut("execution(protected org.springframework.http" +
-            ".ResponseEntity spring.project.server.exceptions" +
-            ".RestExceptionHandler.handleDatabaseError(..))")
-    private void databaseException() {
+            ".ResponseEntity spring.project.server.exceptions.handler.RestExceptionHandler.handleDatabaseError(..))")
+    public void databaseException() {
     }
 
     @AfterReturning(pointcut = "databaseException()", returning = "result")
